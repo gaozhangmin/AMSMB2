@@ -24,7 +24,7 @@ public class SMB2Manager: NSObject, NSSecureCoding, Codable, NSCopying, CustomRe
     fileprivate typealias CopyProgressHandler = (@Sendable
         (_ bytes: Int64, _ soFar: Int64, _ total: Int64) -> Int64?)?
 
-    fileprivate var client: SMB2Client?
+    public var client: SMB2Client?
 
     /// SMB2 Share URL.
     public let url: URL
@@ -1419,7 +1419,7 @@ extension SMB2Manager {
         }
     }
 
-    private func initClient(_ client: SMB2Client, encrypted: Bool) {
+    public func initClient(_ client: SMB2Client, encrypted: Bool) {
         client.securityMode = [.enabled]
         client.authentication = .ntlmSsp
         client.seal = encrypted
@@ -1431,7 +1431,7 @@ extension SMB2Manager {
         client.timeout = _timeout
     }
 
-    private func connect(shareName: String, encrypted: Bool) throws -> SMB2Client {
+    public func connect(shareName: String, encrypted: Bool) throws -> SMB2Client {
         let client = try SMB2Client(timeout: _timeout)
         self.client = client
         initClient(client, encrypted: encrypted)
